@@ -6,7 +6,7 @@
 /*   By: iboutadg <iboutadg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 17:51:21 by iboutadg          #+#    #+#             */
-/*   Updated: 2023/11/23 20:35:25 by iboutadg         ###   ########.fr       */
+/*   Updated: 2023/11/23 22:54:15 by iboutadg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	construct_line(t_list **list, char *line)
 				line[j] = '\0';
 				tmpline = ft_substr((*list)->content, i + 1, BUFFER_SIZE);
 				free((*list)->content);
-				free(*list);
-				*list = malloc (sizeof(t_list));
 				(*list)->content = tmpline;
 				(*list)->next = 0;
 				return ;
@@ -111,13 +109,10 @@ char	*get_line(t_list **list, int fd)
 	char	buffer[BUFFER_SIZE + 1];
 	int		bytes_read;
 
-	if (!(*list))
-	(*list) = malloc(sizeof(t_list));
-	if (!(*list))
-		return(0);
-	tmp = (*list);
-	while (tmp->next)
-		tmp = tmp->next;
+	if (!(*list)->content)
+		tmp = (*list);
+	else
+		tmp = (*list)->next;
 	bytes_read = 1;
 	while (!list_have_new_line(*list) && bytes_read > 0)
 	{
@@ -141,6 +136,11 @@ char	*get_next_line(int fd)
 
 	if (read(fd, line, 0) == -1)
 		return (0);
+	if (!list)
+	{
+		list = malloc (sizeof(t_list));
+		list->content = 0;
+	}
 	line = get_line(&list, fd);
 	return (line);
 }
@@ -152,5 +152,5 @@ int main(void)
 	char	*line;
 	while(line = get_next_line(fd))
 		printf("%s", line);
-	return (0);	
+	return (0);
 }
