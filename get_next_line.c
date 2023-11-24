@@ -6,7 +6,7 @@
 /*   By: iboutadg <iboutadg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 17:51:21 by iboutadg          #+#    #+#             */
-/*   Updated: 2023/11/23 22:54:15 by iboutadg         ###   ########.fr       */
+/*   Updated: 2023/11/24 16:18:42 by iboutadg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,7 @@ char	*get_line(t_list **list, int fd)
 	char	buffer[BUFFER_SIZE + 1];
 	int		bytes_read;
 
-	if (!(*list)->content)
-		tmp = (*list);
-	else
-		tmp = (*list)->next;
+	tmp = (*list);
 	bytes_read = 1;
 	while (!list_have_new_line(*list) && bytes_read > 0)
 	{
@@ -120,10 +117,9 @@ char	*get_line(t_list **list, int fd)
 		if (bytes_read <= 0)
 			break;
 		buffer[bytes_read] = '\0';
-		tmp->content = ft_strdup(buffer);
-		tmp->end = bytes_read;
 		tmp->next = malloc(sizeof(t_list));
 		tmp = tmp->next;
+		tmp->content = ft_strdup(buffer);
 		tmp->next = 0;
 	}
 	return (make_line(list));
@@ -132,6 +128,7 @@ char	*get_line(t_list **list, int fd)
 char	*get_next_line(int fd)
 {
 	static t_list *list = 0;
+	char	buffer[BUFFER_SIZE + 1];
 	char			*line;
 
 	if (read(fd, line, 0) == -1)
@@ -139,7 +136,8 @@ char	*get_next_line(int fd)
 	if (!list)
 	{
 		list = malloc (sizeof(t_list));
-		list->content = 0;
+		buffer[read(fd, buffer, BUFFER_SIZE)] = '\0';
+		list->content = ft_strdup(buffer);
 	}
 	line = get_line(&list, fd);
 	return (line);

@@ -6,7 +6,7 @@
 /*   By: iboutadg <iboutadg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 17:51:26 by iboutadg          #+#    #+#             */
-/*   Updated: 2023/11/23 17:56:53 by iboutadg         ###   ########.fr       */
+/*   Updated: 2023/11/24 16:21:54 by iboutadg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 1000
 # endif //BUFFER_SIZE
 
 #include <unistd.h>
@@ -26,7 +26,6 @@ char    *ft_substr(const char *s, unsigned int start, size_t len);
 
 typedef struct s_list {
 	char			*content;
-	int				end;
 	struct s_list	*next;
 } t_list;
 
