@@ -6,13 +6,13 @@
 /*   By: iboutadg <iboutadg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 18:12:54 by iboutadg          #+#    #+#             */
-/*   Updated: 2023/11/26 19:18:10 by iboutadg         ###   ########.fr       */
+/*   Updated: 2023/11/26 22:05:10 by iboutadg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-static int add_line(t_list **list, char *buffer, int bytes_read)
+static int	add_line(t_list **list, char *buffer, int bytes_read)
 {
 	t_list	*new_node;
 	char	*str;
@@ -99,12 +99,12 @@ char	*get_line(t_list **list, int eof)
 	return (result);
 }
 
-char    *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    static t_list	*list_arr[OPEN_MAX];
+	static t_list	*list_arr[OPEN_MAX];
 	t_list			**list;
-    char			*buffer;
-    char			*result;
+	char			*buffer;
+	char			*result;
 	int				bytes_read;
 
 	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0)
