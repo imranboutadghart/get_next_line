@@ -5,38 +5,35 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: iboutadg <iboutadg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/12 17:51:26 by iboutadg          #+#    #+#             */
-/*   Updated: 2023/11/24 23:05:11 by iboutadg         ###   ########.fr       */
+/*   Created: 2023/11/26 18:13:05 by iboutadg          #+#    #+#             */
+/*   Updated: 2023/11/26 19:00:28 by iboutadg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif //BUFFER_SIZE
-
-# include <unistd.h>
+# include <string.h>
 # include <stdlib.h>
-# include <fcntl.h>
+# include <unistd.h>
+
+# include <stdio.h>
 
 typedef struct s_list {
 	char			*content;
+	size_t			size;
 	struct s_list	*next;
 }	t_list;
 
-typedef struct s_head {
-	char	buffer[BUFFER_SIZE];
-	t_list	*next;
-}	t_head;
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 50
+# endif /* BUFFER_SIZE */
 
-char	*ft_strdup(const char *str);
-char	*ft_substr(const char *s, unsigned int start, size_t len);
-char	*get_line(t_list **list, int fd);
-char	*make_line(t_head *list, int fd);
-size_t	line_len_from_list(t_list *list, int get_len);
-void	construct_line(t_list **list, char *line);
 char	*get_next_line(int fd);
+char	*ft_strncpy(char *dest, char *src, size_t dsize);
+void	ft_lst_add_back(t_list **list, t_list *node);
+void	ft_lstclear(t_list **list);
+t_list	*ft_handle_and_free_node(t_list **list, t_list *node, size_t i);
+t_list	*free_line_from_list(t_list **list);
 
-#endif //GET_NEXT_LINE_H
+#endif /* GET_NEXT_LINE_H */
